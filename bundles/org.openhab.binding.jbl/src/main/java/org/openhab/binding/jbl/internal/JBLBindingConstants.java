@@ -12,6 +12,11 @@
  */
 package org.openhab.binding.jbl.internal;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.openhab.core.thing.ThingTypeUID;
 
@@ -27,21 +32,13 @@ public class JBLBindingConstants {
     private static final String BINDING_ID = "jbl";
 
     // List of all Thing Type UIDs
-    public static final ThingTypeUID BRIDGE_THING_TYPE = new ThingTypeUID(BINDING_ID, "jblAVR");
-    public static final ThingTypeUID ZONE_THING_TYPE = new ThingTypeUID(BINDING_ID, "zone");
+    public static final ThingTypeUID JBL_SDP_55_THING_TYPE = new ThingTypeUID(BINDING_ID, "jbl_sdp_55");
 
-    public static final Set<ThingTypeUID> BRIDGE_THING_TYPES_UIDS = Collections.singleton(BRIDGE_THING_TYPE);
-    public static final Set<ThingTypeUID> ZONE_THING_TYPES_UIDS = Collections.singleton(ZONE_THING_TYPE);
+    public static final Set<ThingTypeUID> AV_THING_TYPES_UIDS = Collections.singleton(JBL_SDP_55_THING_TYPE);
 
     // List of all Channel ids
-    public static final String CHANNEL_POWER = "power";
+    public static final String CHANNEL_DISPLAY_BRIGHTNESS = "display_brightness";
 
-    public enum Zone {
-        Zone1 = 1,
-        Zone2 = 2
-    }
-
-    public static class Models {
-        public static final String JBL_SDP_55 = "JBL SDP-55";
-    }
+    public static final Set<String> CHANNELS_SYSTEM = Collections
+            .unmodifiableSet(Stream.of(CHANNEL_DISPLAY_BRIGHTNESS).collect(Collectors.toSet()));
 }

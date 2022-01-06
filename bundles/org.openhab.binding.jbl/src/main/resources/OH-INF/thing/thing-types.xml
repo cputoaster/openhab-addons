@@ -4,19 +4,14 @@
 	xsi:schemaLocation="https://openhab.org/schemas/thing-description/v1.0.0 https://openhab.org/schemas/thing-description-1.0.0.xsd">
 
 	<!-- Sample Thing Type -->
-	<thing-type id="sample">
-		<!-- Comment this in for Things which need a Bridge to function.
-			<supported-bridge-type-refs>
-			<bridge-type-ref id="JBLBridge" />
-			</supported-bridge-type-refs>
-		-->
+	<thing-type id="jbl_sdp_55">
 
-		<label>JBL Binding Thing</label>
-		<description>Sample thing for JBL Binding</description>
+		<label>JBL SDP-55</label>
+		<description>JBL SDP-55 AV</description>
 
-		<channels>
-			<channel id="channel1" typeId="sample-channel"/>
-		</channels>
+		<channel-groups>
+			<channel-group typeId="system_channels" id="system_channels"/>
+		</channel-groups>
 
 		<config-description>
 			<parameter name="hostname" type="text" required="true">
@@ -24,22 +19,30 @@
 				<label>Hostname</label>
 				<description>Hostname or IP address of the device</description>
 			</parameter>
-			<parameter name="password" type="text" required="true">
-				<context>password</context>
-				<label>Password</label>
-				<description>Passwort to access the device</description>
-			</parameter>
-			<parameter name="refreshInterval" type="integer" unit="s" min="1">
-				<label>Refresh Interval</label>
-				<description>Interval the device is polled in sec.</description>
-			</parameter>
 		</config-description>
 	</thing-type>
 
-	<!-- Sample Channel Type -->
-	<channel-type id="sample-channel">
-		<item-type>Number:Temperature</item-type>
-		<label>Example Temperature</label><!-- Use uppercase words, except prepositions. 2-3 words, max 25 chars -->
-		<description>Sample channel for JBL Binding</description>
+	<channel-group-type id="system_channels">
+		<label>System Commands</label>
+		<description>Control the system</description>
+		<channels>
+			<channel id="display_brightness" typeId="display_brightness"/>
+		</channels>
+	</channel-group-type>
+
+	<channel-type id="display_brightness">
+		<item-type>String</item-type>
+		<label>Display Brightness</label><!-- Use uppercase words, except prepositions. 2-3 words, max 25 chars -->
+		<description>Brightness of front panel display</description>
+		<state pattern="%s">
+			<options>
+				<option value="0x00">OFF</option>
+				<option value="0x01">L1</option>
+				<option value="0x02">L2</option>
+			</options>
+		</state>
 	</channel-type>
+
+
+
 </thing:thing-descriptions>

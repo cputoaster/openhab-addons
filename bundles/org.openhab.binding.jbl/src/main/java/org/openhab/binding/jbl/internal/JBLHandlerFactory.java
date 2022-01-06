@@ -14,8 +14,6 @@ package org.openhab.binding.jbl.internal;
 
 import static org.openhab.binding.jbl.internal.JBLBindingConstants.*;
 
-import java.util.Set;
-
 import org.eclipse.jdt.annotation.NonNullByDefault;
 import org.eclipse.jdt.annotation.Nullable;
 import org.openhab.core.thing.Thing;
@@ -24,6 +22,8 @@ import org.openhab.core.thing.binding.BaseThingHandlerFactory;
 import org.openhab.core.thing.binding.ThingHandler;
 import org.openhab.core.thing.binding.ThingHandlerFactory;
 import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The {@link JBLHandlerFactory} is responsible for creating things and thing
@@ -34,23 +34,20 @@ import org.osgi.service.component.annotations.Component;
 @NonNullByDefault
 @Component(configurationPid = "binding.jbl", service = ThingHandlerFactory.class)
 public class JBLHandlerFactory extends BaseThingHandlerFactory {
-    private static final Set<ThingTypeUID> SUPPORTED_THING_TYPES_UIDS = Collections.unmodifiableSet(Stream
-            .concat(BRIDGE_THING_TYPES_UIDS.stream(), ZONE_THING_TYPES_UIDS.stream()).collect(Collectors.toSet()));
+
     private Logger logger = LoggerFactory.getLogger(JBLHandlerFactory.class);
 
     @Override
     public boolean supportsThingType(ThingTypeUID thingTypeUID) {
-        return SUPPORTED_THING_TYPES_UIDS.contains(thingTypeUID);
+        return AV_THING_TYPES_UIDS.contains(thingTypeUID);
     }
 
     @Override
     protected @Nullable ThingHandler createHandler(Thing thing) {
         ThingTypeUID thingTypeUID = thing.getThingTypeUID();
 
-        if (thingTypeUID.equals(BRIDGE_THING_TYPE)) {
-            return new JBLBridgeHandler((Bridge) thing);
-        } else if (thingTypeUID.equals(ZONE_THING_TYPE)) {
-            return new JBLZoneThingHandler(thing);
+        if (thingTypeUID.equals(JBL_SDP_55_THING_TYPE)) {
+            return new JBLHandler(thing);
         }
 
         logger.error("Unexpected thing encountered in factory: {}", thingTypeUID.getAsString());

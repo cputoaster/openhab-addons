@@ -23,5 +23,4 @@ public class JBLConfiguration {
      * Sample configuration parameters. Replace with your own.
      */
     public String hostname;
-
 }
